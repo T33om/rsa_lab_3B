@@ -1,22 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="h-full">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>RSA Lab 3B — OAEP & PSS</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
     <header>
       <h1>🔐 RSA Lab 3B — OAEP (Encrypt) &amp; PSS (Sign)</h1>
       <div class="muted" id="statusBar">
-        Key size: <span id="keybits" class="badge">{{ key_bits }} bits</span>
-        • Max OAEP payload: <span id="maxpayload" class="badge">{{ max_payload }}</span> bytes
-        • Mode: <span id="mode" class="badge">random</span>
-        • Private: <span id="haspriv" class="badge">yes</span>
+        Key size: <span id="keybits" class="badge">{{ key_bits }} bits</span> •
+        Max OAEP payload:
+        <span id="maxpayload" class="badge">{{ max_payload }}</span> bytes •
+        Mode: <span id="mode" class="badge">random</span> • Private:
+        <span id="haspriv" class="badge">yes</span>
       </div>
-      <p class="muted small">RSA is for small data; use hybrid (RSA+AES) for files.</p>
+      <p class="muted small">
+        RSA is for small data; use hybrid (RSA+AES) for files.
+      </p>
     </header>
 
     <main>
@@ -31,36 +34,62 @@
         <div id="panelRandom">
           <div class="row">
             <label class="muted">Public Key (PEM)</label>
-            <button id="btnDownload" title="Download the public key (safe to share)">⬇️ Download</button>
+            <button
+              id="btnDownload"
+              title="Download the public key (safe to share)"
+            >
+              ⬇️ Download
+            </button>
             <div class="row right">
-              <select id="bits" title="Key size (bigger = more secure & slower)">
+              <select
+                id="bits"
+                title="Key size (bigger = more secure & slower)"
+              >
                 <option>2048</option>
                 <option selected>3072</option>
                 <option>4096</option>
               </select>
-              <button id="btnRegen" title="Regenerate a fresh keypair">♻️ Regenerate</button>
+              <button id="btnRegen" title="Regenerate a fresh keypair">
+                ♻️ Regenerate
+              </button>
             </div>
           </div>
           <pre id="pubpem"><code class="k">{{ pubkey_pem }}</code></pre>
-          <p class="muted mt8">Regenerate creates a new keypair of the selected size. Larger keys are more secure but slower.</p>
+          <p class="muted mt8">
+            Regenerate creates a new keypair of the selected size. Larger keys
+            are more secure but slower.
+          </p>
         </div>
 
         <!-- Import Keys Panel -->
         <div id="panelImport" class="hidden">
-          <p class="warn">⚠️ Do not paste a real private key on the internet. Demo purpose only.</p>
+          <p class="warn">
+            ⚠️ Do not paste a real private key on the internet. Demo purpose
+            only.
+          </p>
           <div class="grid2">
             <div>
               <label class="muted">Public Key (PEM)</label>
-              <textarea id="pub_in" rows="8" placeholder="-----BEGIN PUBLIC KEY-----&#10;...&#10;-----END PUBLIC KEY-----"></textarea>
+              <textarea
+                id="pub_in"
+                rows="8"
+                placeholder="-----BEGIN PUBLIC KEY-----&#10;...&#10;-----END PUBLIC KEY-----"
+              ></textarea>
             </div>
             <div>
               <label class="muted">Private Key (PEM) — optional</label>
-              <textarea id="priv_in" rows="8" placeholder="-----BEGIN PRIVATE KEY-----&#10;...&#10;-----END PRIVATE KEY----- (optional)"></textarea>
+              <textarea
+                id="priv_in"
+                rows="8"
+                placeholder="-----BEGIN PRIVATE KEY-----&#10;...&#10;-----END PRIVATE KEY----- (optional)"
+              ></textarea>
             </div>
           </div>
           <div class="row mt8">
             <button id="btnApply">Apply</button>
-            <button id="btnBackRandom" title="Switch back to random keys">Use Random Mode</button>
+            <button id="btnBackRandom" title="Switch back to random keys">
+              Use Random Mode
+            </button>
           </div>
         </div>
       </section>
@@ -68,8 +97,12 @@
       <!-- OPERATION MODE TABS -->
       <section class="card span2">
         <div class="tabs">
-          <button class="tab active" id="tabManual">Operation Mode: Manual</button>
-          <button class="tab" id="tabLab">Operation Mode: Lab (One-Click)</button>
+          <button class="tab active" id="tabManual">
+            Operation Mode: Manual
+          </button>
+          <button class="tab" id="tabLab">
+            Operation Mode: Lab (One-Click)
+          </button>
         </div>
 
         <!-- Manual Mode Panels -->
@@ -77,10 +110,18 @@
           <div class="grid2">
             <section class="card">
               <h3>🔒 Encrypt (RSA-OAEP)</h3>
-              <textarea id="enc_input" rows="6" placeholder="Enter a short message to encrypt..."></textarea>
+              <textarea
+                id="enc_input"
+                rows="6"
+                placeholder="Enter a short message to encrypt..."
+              ></textarea>
               <div class="row mt8">
-                <button id="btnEncrypt" title="Encrypt with the public key">Encrypt</button>
-                <span class="muted">Max <span id="limit">{{ max_payload }}</span> bytes</span>
+                <button id="btnEncrypt" title="Encrypt with the public key">
+                  Encrypt
+                </button>
+                <span class="muted"
+                  >Max <span id="limit">{{ max_payload }}</span> bytes</span
+                >
                 <span class="badge" id="enc_time">– ms</span>
               </div>
               <label class="muted">Ciphertext (base64):</label>
@@ -89,9 +130,18 @@
 
             <section class="card">
               <h3>🔓 Decrypt</h3>
-              <textarea id="dec_input" rows="6" placeholder="Paste base64 ciphertext here..."></textarea>
+              <textarea
+                id="dec_input"
+                rows="6"
+                placeholder="Paste base64 ciphertext here..."
+              ></textarea>
               <div class="row mt8">
-                <button id="btnDecrypt" title="Decrypt with the private key (if available)">Decrypt</button>
+                <button
+                  id="btnDecrypt"
+                  title="Decrypt with the private key (if available)"
+                >
+                  Decrypt
+                </button>
                 <span class="badge" id="dec_time">– ms</span>
               </div>
               <label class="muted">Plaintext:</label>
@@ -100,9 +150,18 @@
 
             <section class="card">
               <h3>✍️ Sign (RSA-PSS)</h3>
-              <textarea id="sign_input" rows="6" placeholder="Enter message to sign..."></textarea>
+              <textarea
+                id="sign_input"
+                rows="6"
+                placeholder="Enter message to sign..."
+              ></textarea>
               <div class="row mt8">
-                <button id="btnSign" title="Sign with the private key (if available)">Sign</button>
+                <button
+                  id="btnSign"
+                  title="Sign with the private key (if available)"
+                >
+                  Sign
+                </button>
                 <span class="badge" id="sign_time">– ms</span>
               </div>
               <label class="muted">Signature (base64):</label>
@@ -111,10 +170,20 @@
 
             <section class="card">
               <h3>🧪 Verify</h3>
-              <textarea id="ver_msg" rows="4" placeholder="Enter message..."></textarea>
-              <textarea id="ver_sig" rows="4" placeholder="Paste base64 signature..."></textarea>
+              <textarea
+                id="ver_msg"
+                rows="4"
+                placeholder="Enter message..."
+              ></textarea>
+              <textarea
+                id="ver_sig"
+                rows="4"
+                placeholder="Paste base64 signature..."
+              ></textarea>
               <div class="row mt8">
-                <button id="btnVerify" title="Verify with the public key">Verify</button>
+                <button id="btnVerify" title="Verify with the public key">
+                  Verify
+                </button>
                 <span id="ver_status" class="muted"></span>
                 <span class="badge" id="ver_time">– ms</span>
               </div>
@@ -125,42 +194,59 @@
         <!-- Lab Mode Panel -->
         <div id="panelLab" class="hidden">
           <h3>🧪 Lab Mode — One Click</h3>
-          <textarea id="lab_msg" rows="4" placeholder="Type one message here..."></textarea>
+          <textarea
+            id="lab_msg"
+            rows="4"
+            placeholder="Type one message here..."
+          ></textarea>
           <div class="row mt8">
-            <button id="btnLabRun" title="Run all steps with one click">Run Demo</button>
+            <button id="btnLabRun" title="Run all steps with one click">
+              Run Demo
+            </button>
           </div>
           <div class="grid2 mt8">
             <section class="card">
               <h4>Ciphertext</h4>
               <textarea id="lab_ct" rows="6" readonly></textarea>
-              <div class="muted">Encrypt time: <span class="badge" id="lab_enc_ms">– ms</span></div>
+              <div class="muted">
+                Encrypt time: <span class="badge" id="lab_enc_ms">– ms</span>
+              </div>
             </section>
             <section class="card">
               <h4>Decrypted</h4>
               <textarea id="lab_pt" rows="6" readonly></textarea>
-              <div class="muted">Decrypt time: <span class="badge" id="lab_dec_ms">– ms</span></div>
+              <div class="muted">
+                Decrypt time: <span class="badge" id="lab_dec_ms">– ms</span>
+              </div>
             </section>
             <section class="card">
               <h4>Signature</h4>
               <textarea id="lab_sig" rows="6" readonly></textarea>
-              <div class="muted">Sign time: <span class="badge" id="lab_sign_ms">– ms</span></div>
+              <div class="muted">
+                Sign time: <span class="badge" id="lab_sign_ms">– ms</span>
+              </div>
             </section>
             <section class="card">
               <h4>Verify</h4>
               <div id="lab_verify" class="muted"></div>
-              <div class="muted">Verify time: <span class="badge" id="lab_ver_ms">– ms</span></div>
+              <div class="muted">
+                Verify time: <span class="badge" id="lab_ver_ms">– ms</span>
+              </div>
             </section>
           </div>
-          <p class="muted small mt8">Note: decrypt/sign require a private key. In public-only mode, those fields will be empty.</p>
+          <p class="muted small mt8">
+            Note: decrypt/sign require a private key. In public-only mode, those
+            fields will be empty.
+          </p>
         </div>
       </section>
     </main>
 
     <footer>
-      Made for a classroom demo • RSA with OAEP &amp; PSS • Python + Flask + PyCryptodome
-      <br>Built by <b>G1/3B</b>
+      Made for a classroom demo • RSA with OAEP &amp; PSS • Python + Flask +
+      PyCryptodome
+      <br />Built by <b>G1/3B</b>
     </footer>
     <script src="/static/app.js"></script>
   </body>
 </html>
-
