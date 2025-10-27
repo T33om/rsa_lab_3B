@@ -1,0 +1,44 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Arabic", "Noto Sans", Arial, sans-serif;
+  background: #0b0d10; color: #e6e8ea;
+}
+header { padding: 24px; border-bottom: 1px solid #1e232a; background: #0f1216; position: sticky; top: 0; z-index: 1; }
+h1 { margin: 0; font-size: 1.25rem; letter-spacing: .3px; }
+main { max-width: 1100px; margin: 0 auto; padding: 24px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+.card {
+  background: #12161b; border: 1px solid #1f252d; border-radius: 16px;
+  padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row.right { margin-left: auto; gap: 6px; }
+textarea, input, select {
+  width: 100%; background: #0b0f13; color: #e6e8ea; border: 1px solid #1f252d; border-radius: 12px; padding: 12px; outline: none;
+}
+button {
+  background: #1b2838; border: 1px solid #294058; color: #eaf2ff;
+  padding: 10px 14px; border-radius: 12px; cursor: pointer; font-weight: 600;
+}
+button:hover { background: #1f3245; }
+code, pre { background: #0b0f13; border: 1px solid #1f252d; border-radius: 12px; padding: 12px; display: block; overflow-x: auto; }
+.muted { opacity: .8; font-size: .9rem; }
+.small { font-size: .85rem; }
+.ok { color: #7ce38b; }
+.err { color: #ff9595; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.k { font-family: ui-monospace, "Cascadia Code", "Fira Code", SFMono-Regular, Menlo, monospace; }
+.badge { display: inline-block; padding: 4px 8px; border: 1px solid #2a3542; border-radius: 999px; font-size: .8rem; opacity: .9; }
+footer { text-align: center; padding: 24px; color: #9aa4af; }
+.span2 { grid-column: span 2; }
+.mt8 { margin-top: 8px; }
+
+/* NEW: tabs + hidden + warning */
+.hidden { display: none; }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.tab {
+  background: #18232f; border: 1px solid #2a3a4d; color: #e6eef8;
+  padding: 8px 12px; border-radius: 999px; cursor: pointer; font-weight: 600;
+}
+.tab.active { background: #22364a; border-color: #36526d; }
+.warn { background: #261d17; border: 1px solid #5c3a27; color: #ffcc8f; padding: 10px 12px; border-radius: 12px; }
